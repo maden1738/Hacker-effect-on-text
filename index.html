@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>KIRAQUEEN</h1>
+    </div>
+    <script>
+      const originalWord = document.querySelector("h1").innerText;
+
+      // very much unnecesary code to create array of alphabets (just practising hehe)
+      let ascii = [];
+      i = 0;
+      while (i < 26) {
+        ascii[i] = 65 + i;
+        i++;
+      }
+      let letters = ascii.map((el) => String.fromCharCode(el)); // ["A","B","C".......,""]
+      letters = letters.join(""); // [ABC....Z]
+
+      document.querySelector("h1").onmouseover = (event) => {
+        let iterations = 0;
+        const myInterval = setInterval(() => {
+          event.target.innerText = originalWord
+            .split("")
+            .map((el, index) => {
+              // a letter changes to random letter only if its index < iteration
+              if (index < iterations) {
+                return el;
+              }
+              return letters[Math.floor(Math.random() * 26)]; // math.floor instead of math.round bcz we dont want to index 27
+            })
+            .join("");
+          iterations = iterations + 1 / 2; // first letter changes 2 times , second lettter 4 times and  so on
+          if (iterations > 9) clearInterval(myInterval);
+        }, 50);
+      };
+    </script>
+  </body>
+</html>
